@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace game
 {
@@ -38,19 +39,30 @@ namespace game
         }
         public bool ValidateInputArgs(string[] args)
         {
-            if(args.Length < 3)
-            {
-                Console.WriteLine("Error: Number args < 3! Correct: rock paper scissors");
-                return false;
-            }
+            string ErrorMassage = "";
             if(args.Length % 2 == 0)
             {
-                Console.WriteLine("Error: Number args is even! Correct: rock paper scissors");
+                ErrorMassage = "Error: Number args is even!";
+            }
+            if(args.Length < 3)
+            {
+                ErrorMassage = "Error: Number args < 3!";
+            }
+            if(args.Distinct().Count() != args.Length)
+            {
+                ErrorMassage = "Error: Args is no unique!";
+            }
+            if(ErrorMassage.Length != 0)
+            {
+                Console.Write("{0} Correct: rock paper scissors", ErrorMassage);
                 return false;
             }
-            this.gameMoves = args;
-            this.oneHalfMoves = this.gameMoves.Length/2;
-            return true;
+            else
+            {
+                this.gameMoves = args;
+                this.oneHalfMoves = this.gameMoves.Length/2;
+                return true;
+            }
         }
     }
 }
